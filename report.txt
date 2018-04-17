@@ -1,0 +1,116 @@
+%%#%%BEGIN
+%% 氏名:陰山賢太
+%% 学籍番号:18231205
+%% 日付:2018/04/13
+%% Program
+% father(),mother()のみ事実定義
+
+%% father(X,Y) : X is Y's father.
+father(papa,taro).
+father(papa,jiro).
+father(papa,hanako).
+father(ji-ji,papa).
+father(jichan,mama).
+
+%% mother(X,Y) : X is Y's mother.
+mother(mama,taro).
+mother(mama,jiro).
+mother(mama,hanako).
+mother(ba-ba,papa).
+mother(bachan,mama).
+
+%% gfather(X,Y) : X is Y's grandfather.
+gfather(X,Z):-father(X,Y),father(Y,Z).
+gfather(X,Z):-father(X,Y),mother(Y,Z).
+
+%% gmother(X,Y) : X is Y's grandmother.
+gmother(X,Z):-mother(X,Y),father(Y,Z).
+gmother(X,Z):-mother(X,Y),mother(Y,Z).
+
+%% brother(X,Y) : Y is X's brother.
+brother(X,Y):-father(Z,X),father(Z,Y).
+brother(X,Y):-mother(Z,X),mother(Z,Y).
+
+% parent(),male(),female()のみ事実定義
+
+%% male(X) : X is male.
+male(taro).
+male(jiro).
+male(papa).
+male(ji-ji).
+male(jichan).
+
+%% female(X) : X is female.
+female(hanako).
+female(mama).
+female(ba-ba).
+female(bachan).
+
+%% parent(X,Y) : X is Y's parent.
+parent(papa,taro).
+parent(papa,jiro).
+parent(papa,hanako).
+parent(mama,taro).
+parent(mama,jiro).
+parent(mama,hanako).
+parent(ji-ji,papa).
+parent(ba-ba,papa).
+parent(jichan,mama).
+parent(bachan,mama).
+
+gfather(X,Z):-parent(X,Y),parent(Y,Z),male(X).
+gmother(X,Z):-parent(X,Y),parent(Y,Z),female(X).
+brother(X,Y):-parent(Z,X),parent(Z,Y),male(Y).
+%% sister(X,Y) : Y is X's sister.
+sister(X,Y):-parent(Z,X),parent(Z,Y),female(Y).
+
+%% Result
+% father(),mother()のみ事実定義
+
+| ?- con(ex_2_1).
+% consulting /home/i/s231205k/Works/ex_prolog/ex_2_1.pl...
+% consulted /home/i/s231205k/Works/ex_prolog/ex_2_1.pl in module user, 10 msec 68752 bytes
+yes
+| ?- father(papa,taro).
+yes
+| ?- mother(mama,jiro).
+yes
+| ?- gfather(ji-ji,taro).
+yes
+| ?- gmother(bachan,hanako).
+yes
+| ?- brother(taro,jiro).
+yes
+| ?- brother(taro,hanako).
+yes
+| ?- halt.
+
+% parent(),male(),female()のみ事実定義
+
+| ?- con(ex_2_2).
+% consulting /home/i/s231205k/Works/ex_prolog/ex_2_2.pl...
+% consulted /home/i/s231205k/Works/ex_prolog/ex_2_2.pl in module user, 10 msec 70784 bytes
+yes
+| ?- male(taro).
+yes
+| ?- female(hanako).
+yes
+| ?- parent(papa,taro).
+yes
+| ?- gfather(ji-ji,taro).
+yes
+| ?- gmother(bachan,jiro).
+yes
+| ?- brother(taro,jiro).
+yes
+| ?- brother(taro,hanako).
+no
+| ?- sister(taro,hanako).
+yes
+| ?- halt.
+
+%% Comments
+
+
+
+%%#%%END

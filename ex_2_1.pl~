@@ -1,0 +1,3 @@
+father(X,Y). /* X is Y's father */
+mother(X,Y). /* X is Y's mother */
+
